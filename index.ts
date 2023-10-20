@@ -2,7 +2,7 @@ import * as express from 'express'
 import 'express-async-errors'
 import {Application} from "express";
 import * as cors from 'cors'
-import {UserRouter} from './routes/user.router'
+import {UserRouter} from "./routes/user.router";
 
 
 export class App{

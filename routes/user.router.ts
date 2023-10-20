@@ -1,7 +1,9 @@
 import {Request, Response, Router} from "express";
+import {UserRecord} from "../database/records/user.record";
+import {User} from "../types";
 
 
-export class UserRouter{
+export class UserRouter {
     public readonly router:Router = Router();
 
     constructor() {
@@ -13,6 +15,13 @@ export class UserRouter{
     }
 
     private register = async (req:Request,res:Response)=>{
-        const {...body} = req.body;
+        const {...body}:User = req.body;
+        const newUser = new UserRecord(body);
+
+        //@ToDO cypher the password! here
+
+        await newUser.addOne();
+
+        res.end();
     }
 }
