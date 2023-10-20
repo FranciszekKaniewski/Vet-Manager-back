@@ -1,6 +1,7 @@
 import {FieldPacket} from "mysql2";
 import {User} from "../../types";
 import {pool} from "../utils/pool";
+import {Cypher} from "../../utils/Ciphering/Cypher";
 
 type UserResult = [User[],FieldPacket[]]
 
@@ -56,7 +57,7 @@ export class UserRecord implements User{
             name: this.name,
             surname: this.surname,
             email: this.email,
-            password: this.password,
+            password: Cypher(this.password),
             phoneNumber: this.phoneNumber ? this.phoneNumber : null,
             avatar: this.avatar ? this.avatar : null,
             role: this.role,

@@ -16,11 +16,11 @@ export class UserRouter {
 
     private register = async (req:Request,res:Response)=>{
         const {...body}:User = req.body;
-        const newUser = new UserRecord(body);
 
-        //@ToDO cypher the password! here
+        const dbUser = new UserRecord(body as User);
+        await dbUser.addOne();
 
-        await newUser.addOne();
+        console.log(`User, ${body.name} was added to db!`);
 
         res.end();
     }
