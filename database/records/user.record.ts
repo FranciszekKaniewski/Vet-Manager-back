@@ -57,6 +57,14 @@ export class UserRecord implements User{
         return results[0] ? new UserRecord(results[0]) : null;
     }
 
+    public static async getOneByEmail(email:string):Promise<User|null>{
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE email = :email",{
+            email:email,
+        }) as UserResult
+
+        return results[0] ? new UserRecord(results[0]) : null;
+    }
+
     public async addOne():Promise<User>{
         const allEmails:string[] = ((await UserRecord.getAll()).map(e=>e.email));
         if(allEmails.filter(email=>email === this.email).length) throw new Error("This email is already taken.");
