@@ -24,4 +24,10 @@ export class UserRouter {
 
         res.end();
     }
+
+    private login = async (req:Request,res:Response)=>{
+        const {login,password} = req.body;
+
+
+    }
 }
