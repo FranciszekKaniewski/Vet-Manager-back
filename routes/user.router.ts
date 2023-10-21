@@ -15,6 +15,7 @@ export class UserRouter {
     private setUpRoutes(){
         this.router.post('/register', this.register)
         this.router.post('/login', this.login)
+        this.router.post('/logout', this.logout)
     }
 
     private register = async (req:Request,res:Response)=>{
@@ -45,5 +46,16 @@ export class UserRouter {
                 httpOnly: true,
             })
             .send({password,...user});
+    }
+
+    private logout = async (req:Request,res:Response)=>{
+
+        res
+            .clearCookie("jwt",{
+                secure: true,
+                sameSite: "none",
+            })
+            .status(200)
+            .json("Logged out!")
     }
 }
