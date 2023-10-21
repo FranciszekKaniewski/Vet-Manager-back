@@ -1,6 +1,8 @@
 import {Request, Response, Router} from "express";
 import {UserRecord} from "../database/records/user.record";
 import {User} from "../types";
+import * as jwt from "jsonwebtoken";
+import {compareSync} from "bcrypt";
 
 
 export class UserRouter {
@@ -12,6 +14,7 @@ export class UserRouter {
 
     private setUpRoutes(){
         this.router.post('/register', this.register)
+        this.router.post('/login', this.login)
     }
 
     private register = async (req:Request,res:Response)=>{
@@ -22,12 +25,25 @@ export class UserRouter {
 
         console.log(`User, ${body.name} was added to db!`);
 
-        res.end();
+        res.status(200).end();
     }
 
     private login = async (req:Request,res:Response)=>{
-        const {login,password} = req.body;
+        const {email,password} = req.body;
 
+        const user = await UserRecord.getOneByEmail(email);
 
+        if(!compareSync(password,user.password)){
+            throw new Error("Wrong password!");
+        }
+
+        const token = jwt.sign({id:user.id}, "/Ov'm`2>=8|,lPUH2e[r2bCIBqv&/MEyV<,'}sb$,>Xq=&3N(Z-a_7yF9t_xmS(");
+
+        res
+            .status(200)
+            .cookie("jwt",token,{
+                httpOnly: true,
+            })
+            .send({password,...user});
     }
 }
