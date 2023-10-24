@@ -1,5 +1,6 @@
 import * as express from 'express'
 import 'express-async-errors'
+import * as cookieParser from 'cookie-parser'
 import {Application} from "express";
 import * as cors from 'cors'
 import {UserRouter} from "./routes/user.router";
@@ -16,8 +17,9 @@ export class App{
 
     private configApp() {
         this.app = express();
-        this.app.use(cors({origin:'http://localhost:3000'}))
 
+        this.app.use(cookieParser())
+        this.app.use(cors({credentials: true,origin:'http://localhost:3000'}))
         this.app.use(express.json())
     }
 
