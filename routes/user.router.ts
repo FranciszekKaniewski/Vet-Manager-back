@@ -18,7 +18,6 @@ export class UserRouter {
         this.router.post('/login', this.login)
         this.router.post('/logout', this.logout)
         this.router.get('/info', verificateJWT, this.getData)
-        this.router.get('/is_logged', this.isLoggedIn)
     }
 
     private register = async (req: Request, res: Response) => {
@@ -48,7 +47,7 @@ export class UserRouter {
             .cookie("jwt", token, {
                 httpOnly: true,
             })
-            .end();
+            .json({message:"logged in"});
     }
 
     private logout = async (req: Request, res: Response) => {
@@ -63,25 +62,11 @@ export class UserRouter {
     }
 
     private getData = async (req: Request, res: Response) => {
-        const {id, ...body} = (jwt.decode(req.body.token) as { id: string, iat: number })
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
 
         const userData = await UserRecord.getOneById(id);
         const {password, ...dataToSend} = userData;
 
         res.send(dataToSend);
-    }
-
-    private isLoggedIn = async (req: Request, res: Response) => {
-        const token = req.cookies.jwt
-
-        if (token) {
-            jwt.verify(token, "/Ov'm`2>=8|,lPUH2e[r2bCIBqv&/MEyV<,'}sb$,>Xq=&3N(Z-a_7yF9t_xmS(",(err:any)=>{
-                if(err) throw new Error(err.message);
-            })
-
-            res.status(200).json({isLogged : true})
-        }else{
-            res.status(401).json({isLogged : false});
-        }
     }
 }
