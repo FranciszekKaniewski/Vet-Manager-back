@@ -63,6 +63,8 @@ export class UserRecord implements User{
             email:email,
         }) as UserResult
 
+        if(results.length === 0) throw new ValidationError("User with that e-mail do not exist!");
+
         return results[0] ? new UserRecord(results[0]) : null;
     }
 
