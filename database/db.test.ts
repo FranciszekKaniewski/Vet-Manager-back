@@ -4,11 +4,14 @@ import {User} from "../types";
 
 (async ()=>{
 
-    const users = await UserRecord.getAll();
-    console.log(users);
+    // const users = await UserRecord.getAll();
+    // console.log(users);
+    //
+    // const newUser:UserRecord = new UserRecord({name:"Tomm",surname:"Smith",email:"TomwwS@gmail.com",password:"Password123",role:'user'})
+    // const result = await newUser.addOne();
+    // console.log(result)
 
-    const newUser:UserRecord = new UserRecord({name:"Tomm",surname:"Smith",email:"TomwwS@gmail.com",password:"Password123",role:'user'})
-    const result = await newUser.addOne();
-    console.log(result)
+    const eo = await UserRecord.getOneByEmail("e@o2.pl");
+    console.log(eo)
 
 })()

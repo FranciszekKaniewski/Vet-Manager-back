@@ -4,6 +4,7 @@ import * as cookieParser from 'cookie-parser'
 import {Application} from "express";
 import * as cors from 'cors'
 import {UserRouter} from "./routes/user.router";
+import {handleError} from "./utils/errors";
 
 
 export class App{
@@ -28,6 +29,7 @@ export class App{
     }
 
     private run() {
+        this.app.use(handleError);
         this.app.listen(3001,'localhost',()=>{
             console.log('Listening on http://localhost:3001/')
         })

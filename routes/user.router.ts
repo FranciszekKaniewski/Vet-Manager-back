@@ -4,6 +4,7 @@ import {User} from "../types";
 import * as jwt from "jsonwebtoken";
 import {compareSync} from "bcrypt";
 import {verificateJWT} from "../utils/jwt-verification";
+import {ValidationError} from "../utils/errors";
 
 
 export class UserRouter {
@@ -37,7 +38,7 @@ export class UserRouter {
         const user = await UserRecord.getOneByEmail(email);
 
         if (!compareSync(password, user.password)) {
-            throw new Error("Wrong password!");
+            throw new ValidationError("Wrong password!");
         }
 
         const token = jwt.sign({id: user.id}, "/Ov'm`2>=8|,lPUH2e[r2bCIBqv&/MEyV<,'}sb$,>Xq=&3N(Z-a_7yF9t_xmS(");

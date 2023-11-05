@@ -2,6 +2,7 @@ import {FieldPacket} from "mysql2";
 import {User} from "../../types";
 import {pool} from "../utils/pool";
 import {Cypher} from "../../utils/Ciphering/Cypher";
+import {ValidationError} from "../../utils/errors";
 
 type UserResult = [User[],FieldPacket[]]
 
@@ -34,12 +35,12 @@ export class UserRecord implements User{
 
         const {name,surname,email,password,phoneNumber} = this
 
-        if(name.length < 3 || name.length > 60) throw new Error("Name should have more than 3 characters and less than 61.");
-        if(surname.length < 3 || surname.length > 60) throw new Error("Surname should have more than 3 characters and less than 61.");
-        if(!email.includes('@') || surname.length < 3 || surname.length > 60) throw new Error("E-mail have to be between maximum 60 and minimum 3 characters and contains @ character.")
-        if(password.length < 7 || password.length > 60 || !containsUpperCaseLetter(password) || !containsNumber(password)) throw new Error("Password have to be between maximum 60 and minimum 7 characters, contains capital letter and number.")
+        if(name.length < 3 || name.length > 60) throw new ValidationError("Name should have more than 3 characters and less than 61.");
+        if(surname.length < 3 || surname.length > 60) throw new ValidationError("Surname should have more than 3 characters and less than 61.");
+        if(!email.includes('@') || surname.length < 3 || surname.length > 60) throw new ValidationError("E-mail have to be between maximum 60 and minimum 3 characters and contains @ character.")
+        if(password.length < 7 || password.length > 60 || !containsUpperCaseLetter(password) || !containsNumber(password)) throw new ValidationError("Password have to be between maximum 60 and minimum 7 characters, contains capital letter and number.")
         if(phoneNumber){
-            if(phoneNumber.toString().length !== 9) throw new Error("Phone number have to contains 9 characters.")
+            if(phoneNumber.toString().length !== 9) throw new ValidationError("Phone number have to contains 9 characters.")
         }
     }
 
@@ -67,7 +68,7 @@ export class UserRecord implements User{
 
     public async addOne():Promise<User>{
         const allEmails:string[] = ((await UserRecord.getAll()).map(e=>e.email));
-        if(allEmails.filter(email=>email === this.email).length) throw new Error("This email is already taken.");
+        if(allEmails.filter(email=>email === this.email).length) throw new ValidationError("This email is already taken.");
 
         const userData = {
             name: this.name,
