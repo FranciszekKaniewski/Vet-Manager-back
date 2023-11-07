@@ -4,5 +4,5 @@ export interface Pet{
     species: string;
     race?: string;
     birthday: string;
-    ownerID: string;
+    ownerId: string;
 }
