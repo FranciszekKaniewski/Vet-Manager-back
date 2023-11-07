@@ -29,13 +29,13 @@ export class PetRecord implements Pet{
 
     }
 
-    public static async getAllFromOneOwner(ownerId:string):Promise<Pet[]|null>{
+    public static async getAllFromOneOwner(ownerId:string):Promise<PetRecord[]|null>{
         const [result] = await pool.execute("Select * FROM `pets` WHERE ownerId = :ownerId",{
             ownerId:ownerId,
         }) as PetsResult;
 
         const formattedArr = result.map(pet=> {
-            const d = moment.utc(pet.birthday).format('MM-DD-YYYY');
+            const d = moment.utc(`${pet.birthday} UTC`).format("YYYY-MM-DD");
             const newPet:Pet = {...pet,birthday:d};
             return new PetRecord(newPet)
         })
@@ -49,7 +49,9 @@ export class PetRecord implements Pet{
             id:petId,
         }) as PetsResult;
 
-        return new PetRecord(result[0]);
+        const formattedDataObj = {birthday:moment.utc(result[0].birthday).format('YYYY-MM-DD'),...result[0]}
+
+        return new PetRecord(formattedDataObj);
     }
 
     public async add():Promise<void>{
@@ -85,7 +87,7 @@ export class PetRecord implements Pet{
             ownerId:this.ownerId
         }
 
-        await pool.execute("UPDATE `pets` SET `name`=:name,`species`=:species,`race`=:race,`birthday`=birthday,`ownerId`=ownerId WHERE id = :id",
+        await pool.execute("UPDATE `pets` SET `name`=:name,`species`=:species,`race`=:race,`birthday`=:birthday,`ownerId`=ownerId WHERE id = :id",
             petData,
         )
     }

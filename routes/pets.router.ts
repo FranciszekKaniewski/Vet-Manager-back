@@ -22,6 +22,7 @@ export class PetRouter{
         const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
 
         const petsArr = await PetRecord.getAllFromOneOwner(id);
+        console.log(petsArr)
 
         res.status(200).json(petsArr);
     }
