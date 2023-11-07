@@ -5,6 +5,7 @@ import {Application} from "express";
 import * as cors from 'cors'
 import {UserRouter} from "./routes/user.router";
 import {handleError} from "./utils/errors";
+import {PetRouter} from "./routes/pets.router";
 
 
 export class App{
@@ -26,6 +27,7 @@ export class App{
 
     private setRoutes() {
         this.app.use('/user', new UserRouter().router)
+        this.app.use('/pet', new PetRouter().router)
     }
 
     private run() {
