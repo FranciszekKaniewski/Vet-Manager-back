@@ -36,8 +36,8 @@ export class UserRecord implements User{
 
         const {name,surname,email,password,phoneNumber} = this;
 
-        if(name.length < 3 || name.length > 60) throw new ValidationError("Name should have more than 3 characters and less than 61.");
-        if(surname.length < 3 || surname.length > 60) throw new ValidationError("Surname should have more than 3 characters and less than 61.");
+        if(name.length < 3 || name.length > 60) throw new ValidationError("The name should be more than 3 characters and less than 61.");
+        if(surname.length < 3 || surname.length > 60) throw new ValidationError("Surname should be more than 3 characters and less than 61.");
         if(!email.includes('@') || surname.length < 3 || surname.length > 60) throw new ValidationError("E-mail have to be between maximum 60 and minimum 3 characters and contains @ character.");
         if(password.length < 7 || password.length > 60 || !containsUpperCaseLetter(password) || !containsNumber(password)) throw new ValidationError("Password have to be between maximum 60 and minimum 7 characters, contains capital letter and number.");
         if(phoneNumber){
