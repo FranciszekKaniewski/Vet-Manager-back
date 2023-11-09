@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.ts",
   "scripts": {
-    "tsStart": "ts-node index.ts",
+    "start": "ts-node index.ts",
     "tsStartDev": "tsnd index.ts",
     "dbTestStart": "ts-node ./database/db.test.ts",
     "build": "tsc"
