@@ -1,7 +1,7 @@
 import {Pet} from "../../types";
 import {FieldPacket} from "mysql2";
 import {pool} from "../utils/pool";
-import * as moment from "moment";
+import moment from "moment"
 import {v4 as uuid} from "uuid"
 import {ValidationError} from "../../utils/errors";
 

@@ -1,8 +1,8 @@
-import * as express from 'express'
+import express from 'express'
 import 'express-async-errors'
-import * as cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 import {Application} from "express";
-import * as cors from 'cors'
+import cors from 'cors'
 import {UserRouter} from "./routes/user.router";
 import {handleError} from "./utils/errors";
 import {PetRouter} from "./routes/pets.router";
