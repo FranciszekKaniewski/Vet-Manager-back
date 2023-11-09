@@ -15,10 +15,10 @@ export class UserRouter {
     }
 
     private setUpRoutes() {
-        this.router.post('/register', this.register)
-        this.router.post('/login', this.login)
-        this.router.post('/logout', this.logout)
-        this.router.get('/info', verificateJWT, this.getData)
+        this.router.post('/register', this.register);
+        this.router.post('/login', this.login);
+        this.router.post('/logout', this.logout);
+        this.router.get('/info', verificateJWT, this.getData);
     }
 
     private register = async (req: Request, res: Response) => {
@@ -59,11 +59,11 @@ export class UserRouter {
                 sameSite: "none",
             })
             .status(200)
-            .json("Logged out!")
+            .json("Logged out!");
     }
 
     private getData = async (req: Request, res: Response) => {
-        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number });
 
         const userData = await UserRecord.getOneById(id);
         const {password, ...dataToSend} = userData;

@@ -37,7 +37,8 @@ export class PetRecord implements Pet{
         const formattedArr = result.map(pet=> {
             const d = moment.utc(`${pet.birthday} UTC`).format("YYYY-MM-DD");
             const newPet:Pet = {...pet,birthday:d};
-            return new PetRecord(newPet)
+
+            return new PetRecord(newPet);
         })
 
         return result.length ? formattedArr : null;
@@ -49,7 +50,7 @@ export class PetRecord implements Pet{
             id:petId,
         }) as PetsResult;
 
-        const formattedDataObj = {birthday:moment.utc(result[0].birthday).format('YYYY-MM-DD'),...result[0]}
+        const formattedDataObj = {birthday:moment.utc(result[0].birthday).format('YYYY-MM-DD'),...result[0]};
 
         return new PetRecord(formattedDataObj);
     }
@@ -67,13 +68,13 @@ export class PetRecord implements Pet{
 
         await pool.execute("INSERT INTO `pets`(`id`, `name`,`birthday`, `species`, `race`, `ownerID`) VALUES (:id,:name,:birthday,:species,:race,:ownerId)",
             petData,
-        )
+        );
     }
 
     public async delete():Promise<void>{
         await pool.execute("DELETE FROM `pets` WHERE id = :id",{
             id:this.id,
-        })
+        });
     }
 
     public async update():Promise<void>{
@@ -89,6 +90,6 @@ export class PetRecord implements Pet{
 
         await pool.execute("UPDATE `pets` SET `name`=:name,`species`=:species,`race`=:race,`birthday`=:birthday,`ownerId`=ownerId WHERE id = :id",
             petData,
-        )
+        );
     }
 }

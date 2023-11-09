@@ -33,21 +33,21 @@ export class UserRecord implements User{
         const containsUpperCaseLetter = (string:string) => string.toLowerCase() !== string;
         const containsNumber = (string:string) => /\d/.test(string);
 
-        const {name,surname,email,password,phoneNumber} = this
+        const {name,surname,email,password,phoneNumber} = this;
 
         if(name.length < 3 || name.length > 60) throw new ValidationError("Name should have more than 3 characters and less than 61.");
         if(surname.length < 3 || surname.length > 60) throw new ValidationError("Surname should have more than 3 characters and less than 61.");
-        if(!email.includes('@') || surname.length < 3 || surname.length > 60) throw new ValidationError("E-mail have to be between maximum 60 and minimum 3 characters and contains @ character.")
-        if(password.length < 7 || password.length > 60 || !containsUpperCaseLetter(password) || !containsNumber(password)) throw new ValidationError("Password have to be between maximum 60 and minimum 7 characters, contains capital letter and number.")
+        if(!email.includes('@') || surname.length < 3 || surname.length > 60) throw new ValidationError("E-mail have to be between maximum 60 and minimum 3 characters and contains @ character.");
+        if(password.length < 7 || password.length > 60 || !containsUpperCaseLetter(password) || !containsNumber(password)) throw new ValidationError("Password have to be between maximum 60 and minimum 7 characters, contains capital letter and number.");
         if(phoneNumber){
-            if(phoneNumber.toString().length !== 9) throw new ValidationError("Phone number have to contains 9 characters.")
+            if(phoneNumber.toString().length !== 9) throw new ValidationError("Phone number have to contains 9 characters.");
         }
     }
 
     public static async getAll():Promise<User[]>{
-        const [result] = (await pool.execute("SELECT * FROM `users`") as UserResult)
+        const [result] = (await pool.execute("SELECT * FROM `users`") as UserResult);
 
-        return result.map(user => new UserRecord(user))
+        return result.map(user => new UserRecord(user));
     }
 
     public static async getOneById(id:string):Promise<User|null>{

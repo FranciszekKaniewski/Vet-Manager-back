@@ -20,20 +20,20 @@ export class App{
     private configApp() {
         this.app = express();
 
-        this.app.use(cookieParser())
-        this.app.use(cors({credentials: true,origin:'http://localhost:3000'}))
-        this.app.use(express.json())
+        this.app.use(cookieParser());
+        this.app.use(cors({credentials: true,origin:'http://localhost:3000'}));
+        this.app.use(express.json());
     }
 
     private setRoutes() {
-        this.app.use('/user', new UserRouter().router)
-        this.app.use('/pet', new PetRouter().router)
+        this.app.use('/user', new UserRouter().router);
+        this.app.use('/pet', new PetRouter().router);
     }
 
     private run() {
         this.app.use(handleError);
         this.app.listen(3001,'localhost',()=>{
-            console.log('Listening on http://localhost:3001/')
+            console.log('Listening on http://localhost:3001/');
         })
     }
 }

@@ -19,19 +19,18 @@ export class PetRouter{
     }
 
     private async getAllPetsFromOneOwner(req:Request,res:Response){
-        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number });
 
         const petsArr = await PetRecord.getAllFromOneOwner(id);
-        console.log(petsArr)
 
         res.status(200).json(petsArr);
     }
 
     private async addOne(req:Request,res:Response){
-        const petReq = req.body
-        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
+        const petReq = req.body;
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number });
 
-        const pet:Pet = {...petReq,ownerId:id}
+        const pet:Pet = {...petReq,ownerId:id};
         const newPet = new PetRecord(pet);
 
         await newPet.add();
@@ -39,8 +38,8 @@ export class PetRouter{
     }
 
     private async deleteOne(req:Request,res:Response){
-        const petId = req.body.id
-        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
+        const petId = req.body.id;
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number });
 
         const petToDelete = await PetRecord.getOneFromOneOwner(id,petId);
 
@@ -50,10 +49,10 @@ export class PetRouter{
     }
 
     private async updateOne(req:Request,res:Response){
-        const petReq = req.body
-        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number })
+        const petReq = req.body;
+        const {id, ...body} = (jwt.decode(req.cookies.jwt) as { id: string, iat: number });
 
-        const pet:Pet = {...petReq,ownerId:id}
+        const pet:Pet = {...petReq,ownerId:id};
 
         const getPet = await PetRecord.getOneFromOneOwner(pet.ownerId,pet.id);
 
