@@ -1,6 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import {NextFunction, Request, Response} from "express";
 import {JsonWebTokenError, JwtPayload} from "jsonwebtoken";
+import {ValidationError} from "./errors";
 
 export const verificateJWT = (req:Request, res:Response, next:NextFunction) => {
     const token = req.cookies.jwt;
@@ -16,6 +17,6 @@ export const verificateJWT = (req:Request, res:Response, next:NextFunction) => {
             next();
         });
     } else {
-        res.sendStatus(401);
+        throw new ValidationError("You are logged out!");
     }
 };
