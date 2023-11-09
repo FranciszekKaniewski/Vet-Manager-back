@@ -32,7 +32,7 @@ export class App{
 
     private run() {
         this.app.use(handleError);
-        this.app.listen(3001,'localhost',()=>{
+        this.app.listen(process.env.PORT || 3001,()=>{
             console.log('Listening on http://localhost:3001/');
         })
     }
