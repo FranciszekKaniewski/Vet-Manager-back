@@ -3,6 +3,7 @@ import {User} from "../../types";
 import {pool} from "../utils/pool";
 import {Cypher} from "../../utils/Ciphering/Cypher";
 import {ValidationError} from "../../utils/errors";
+import {v4 as uuid} from "uuid"
 
 type UserResult = [User[],FieldPacket[]]
 
@@ -17,7 +18,7 @@ export class UserRecord implements User{
     role: 'admin'|'doctor'|'user';
 
     constructor(obj:User) {
-        this.id = obj.id;
+        this.id = obj.id ?? uuid();
         this.name = obj.name;
         this.surname = obj.surname;
         this.email = obj.email;
@@ -73,6 +74,7 @@ export class UserRecord implements User{
         if(allEmails.filter(email=>email === this.email).length) throw new ValidationError("This email is already taken.");
 
         const userData = {
+            id:this.id,
             name: this.name,
             surname: this.surname,
             email: this.email,
@@ -82,7 +84,7 @@ export class UserRecord implements User{
             role: this.role,
         }
 
-        await pool.execute("INSERT INTO `users` (`name`,`surname`,`email`,`password`,`phone-number`,`avatar`,`role`) VALUES (:name,:surname,:email,:password,:phoneNumber,:avatar,:role)",
+        await pool.execute("INSERT INTO `users` (`id`,`name`,`surname`,`email`,`password`,`phone-number`,`avatar`,`role`) VALUES (:name,:surname,:email,:password,:phoneNumber,:avatar,:role)",
             userData,
         );
 
