@@ -3,6 +3,7 @@ import {FieldPacket} from "mysql2";
 import {pool} from "../utils/pool";
 import * as moment from "moment";
 import {v4 as uuid} from "uuid"
+import {ValidationError} from "../../utils/errors";
 
 type PetsResult = [Pet[],FieldPacket[]]
 
@@ -27,6 +28,13 @@ export class PetRecord implements Pet{
 
     private validation(){
 
+        const {name,species,race,birthday} = this
+
+        if(name.length < 2 || name.length > 60) throw new ValidationError("Pet's name should be more than 2 characters and less than 61.");
+        if(species.length < 2 || species.length > 60) throw new ValidationError("Pet's species should be more than 2 characters and less than 61.");
+        if(race.length > 60 || race.length === 1) throw new ValidationError("Pet's race should be more than 2 characters and less than 61, Or stay empty.");
+        if(moment.utc(birthday).unix()>Date.now()) throw new ValidationError("Date of birth must be today or in the past.");
+        if(!moment(birthday,"YYYY-MM-DD").isValid()) throw new ValidationError("Invalid data type.");
     }
 
     public static async getAllFromOneOwner(ownerId:string):Promise<PetRecord[]|null>{
@@ -35,7 +43,7 @@ export class PetRecord implements Pet{
         }) as PetsResult;
 
         const formattedArr = result.map(pet=> {
-            const d = moment.utc(`${pet.birthday} UTC`).format("YYYY-MM-DD");
+            const d = moment(pet.birthday).format("YYYY-MM-DD");
             const newPet:Pet = {...pet,birthday:d};
 
             return new PetRecord(newPet);
@@ -50,7 +58,7 @@ export class PetRecord implements Pet{
             id:petId,
         }) as PetsResult;
 
-        const formattedDataObj = {birthday:moment.utc(result[0].birthday).format('YYYY-MM-DD'),...result[0]};
+        const formattedDataObj = {...result[0],birthday:moment(result[0].birthday).format('YYYY-MM-DD')};
 
         return new PetRecord(formattedDataObj);
     }
