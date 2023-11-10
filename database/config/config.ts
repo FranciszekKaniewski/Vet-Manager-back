@@ -1,6 +1,7 @@
 export const config = {
-    dbHost: process.env.MYSQL_USER,
-    dbUser: process.env.MYSQL_KEY,
-    dbPassword: process.env.MYSQL_DBNAME,
-    dbDatabase: process.env.MYSQL_HOST,
+    dbHost: 'localhost',
+    dbUser: 'user',
+    dbPassword: 'password',
+    dbDatabase: 'database',
+    corsOrigin: 'http://localhost:3000',
 };
