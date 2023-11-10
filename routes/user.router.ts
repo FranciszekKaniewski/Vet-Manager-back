@@ -46,7 +46,7 @@ export class UserRouter {
         res
             .status(200)
             .cookie("jwt", token, {
-                sameSite: false,
+                sameSite: 'none',
                 maxAge: 900000,
                 httpOnly: true,
             })
