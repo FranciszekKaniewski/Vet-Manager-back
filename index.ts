@@ -31,7 +31,7 @@ export class App{
     }
 
     private run() {
-        console.log(process.env.JAWSDB_URL)
+        console.log(process.env.JAWSDB_KEY)
         this.app.use(handleError);
         this.app.listen(process.env.PORT || 3001,()=>{
             console.log('Listening on http://localhost:3001/');
