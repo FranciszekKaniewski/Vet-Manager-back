@@ -1,7 +1,12 @@
-export const config = {
+export const config = !process.env.JAWSDB_URL ?{
     dbHost: 'localhost',
-    dbUser: 'user',
-    dbPassword: 'password',
+    dbUser: 'root',
+    dbPassword: '',
     dbDatabase: 'database',
-    corsOrigin: 'http://localhost:3000',
+}
+: {
+    dbHost: process.env.JAWSDB_HOST,
+    dbUser: process.env.JAWSDB_USER,
+    dbPassword: process.env.JAWSDB_PASSWORD,
+    dbDatabase: process.env.JAWSDB_DATABASE,
 };
