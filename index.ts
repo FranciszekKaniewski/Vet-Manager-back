@@ -21,7 +21,7 @@ export class App{
         this.app = express();
 
         this.app.use(cookieParser());
-        this.app.use(cors({credentials: true,origin:'http://localhost:3000'}));
+        this.app.use(cors({credentials: true,origin:'https://wet-manager-app.netlify.app/'}));
         this.app.use(express.json());
     }
 
