@@ -12,6 +12,3 @@ https://github.com/FranciszekKaniewski/Vet-Manager-front
   <li>TypeScript</li>
   <li>MySql</li>
 </ul>
-
-![image](https://github.com/FranciszekKaniewski/Vet-Manager-back/assets/98970655/44b93466-a2ff-4a7f-b656-48a7c90affe6)
-
