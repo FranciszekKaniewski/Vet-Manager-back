@@ -46,7 +46,9 @@ export class UserRouter {
         res
             .status(200)
             .cookie("jwt", token, {
+                maxAge: 1000*60*30,
                 httpOnly: true,
+                signed: true,
             })
             .json({message:"logged in"});
     }
