@@ -86,6 +86,7 @@ export class PetRecord implements Pet{
     }
 
     public async update():Promise<void>{
+        this.validation();
 
         const petData = {
             id: this.id,
